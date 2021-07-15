@@ -1,8 +1,8 @@
 {% set name = "agate-sql" %}
-{% set version = "0.5.6" %}
+{% set version = "0.5.7" %}
 {% set compress_type = "tar.gz" %}
 {% set hash_type = "sha256" %}
-{% set hash = "056dc9e587fbdfdf3f1c9950f4793a5ee87622c19deba31aa0a6d6681816dcde" %}
+{% set hash = "7622c1f243b5a9a5efddfe28c36eeeb30081e43e3eb72e8f3da22c2edaecf4d8" %}
 
 package:
   name: {{ name|lower }}
@@ -22,6 +22,8 @@ requirements:
   host:
     - python >=3.6
     - setuptools
+    - pip
+    - wheel
 
   run:
     - python >=3.6
@@ -31,6 +33,10 @@ requirements:
 test:
   imports:
     - agatesql
+  requires:
+    - pip
+  commands:
+    - pip check
 
 about:
   home: http://agate-sql.readthedocs.org/
