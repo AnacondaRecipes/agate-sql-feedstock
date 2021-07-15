@@ -33,7 +33,8 @@ requirements:
 test:
   imports:
     - agatesql
-
+  requires:
+    - pip
   commands:
     - pip check
 
