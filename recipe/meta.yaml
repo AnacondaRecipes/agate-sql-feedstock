@@ -31,10 +31,10 @@ requirements:
 
 test:
   requires:
-    - pip
+    # - pip
     - python <3.10
   commands:
-    - pip check
+    # - pip check
   imports:
     - agatesql
 
