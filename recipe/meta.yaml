@@ -21,7 +21,7 @@ build:
 
 requirements:
   host:
-    - python >=3.6
+    - python
     - setuptools
 
   run:
@@ -30,6 +30,11 @@ requirements:
     - sqlalchemy >=1.0.8
 
 test:
+  requires:
+    - pip
+    - python <3.10
+  commands:
+    - pip check
   imports:
     - agatesql
 
