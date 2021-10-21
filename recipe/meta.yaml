@@ -23,6 +23,8 @@ requirements:
   host:
     - python
     - setuptools
+    - pip
+    - wheel
 
   run:
     - python >=3.6
@@ -31,10 +33,10 @@ requirements:
 
 test:
   requires:
-    # - pip
+    - pip
     - python <3.10
   commands:
-    # - pip check
+    - pip check
   imports:
     - agatesql
 
