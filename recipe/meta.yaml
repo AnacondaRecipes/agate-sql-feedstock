@@ -35,6 +35,9 @@ test:
   requires:
     - pip
     - python <3.10
+    # - pyicu
+    - future
+    - parsedatetime
   commands:
     - pip check
   imports:
