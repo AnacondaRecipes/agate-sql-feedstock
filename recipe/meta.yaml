@@ -14,7 +14,7 @@ source:
   {{ hash_type }}: {{ hash }}
 
 build:
-  # skip s390x due to  missing parsedatatime and agate version >=1.5.0
+  # skip s390x due to  missing parsedatetime and agate version >=1.5.0
   skip: true  # [py<36 or s390x]
   noarch: python
   number: 0
