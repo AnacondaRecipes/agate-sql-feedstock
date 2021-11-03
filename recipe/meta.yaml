@@ -14,7 +14,7 @@ source:
   {{ hash_type }}: {{ hash }}
 
 build:
-  skip: true  # [s390x]
+  skip: true  # [py<36]
   noarch: python
   number: 0
   script: python setup.py install --single-version-externally-managed --record=record.txt
