@@ -1,8 +1,8 @@
 {% set name = "agate-sql" %}
-{% set version = "0.5.6" %}
+{% set version = "0.5.8" %}
 {% set compress_type = "tar.gz" %}
 {% set hash_type = "sha256" %}
-{% set hash = "056dc9e587fbdfdf3f1c9950f4793a5ee87622c19deba31aa0a6d6681816dcde" %}
+{% set hash = "581e062ae878cc087d3d0948670d46b16589df0790bf814524b0587a359f2ada" %}
 
 package:
   name: {{ name|lower }}
@@ -14,14 +14,18 @@ source:
   {{ hash_type }}: {{ hash }}
 
 build:
+  # skip s390x due to  missing parsedatetime and agate version >=1.5.0
+  skip: true  # [py<36 or s390x]
   noarch: python
   number: 0
   script: python setup.py install --single-version-externally-managed --record=record.txt
 
 requirements:
   host:
-    - python >=3.6
+    - python
     - setuptools
+    - pip
+    - wheel
 
   run:
     - python >=3.6
@@ -29,6 +33,14 @@ requirements:
     - sqlalchemy >=1.0.8
 
 test:
+  requires:
+    - pip
+    - python <3.10
+    - pyicu
+    - future
+    - parsedatetime
+  commands:
+    - pip check
   imports:
     - agatesql
 
