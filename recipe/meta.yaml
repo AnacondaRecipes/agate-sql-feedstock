@@ -1,56 +1,53 @@
 {% set name = "agate-sql" %}
-{% set version = "0.5.8" %}
-{% set compress_type = "tar.gz" %}
-{% set hash_type = "sha256" %}
-{% set hash = "581e062ae878cc087d3d0948670d46b16589df0790bf814524b0587a359f2ada" %}
+{% set version = "0.7.2" %}
 
 package:
   name: {{ name|lower }}
   version: {{ version }}
 
 source:
-  fn: {{ name }}-{{ version }}.{{ compress_type }}
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.{{ compress_type }}
-  {{ hash_type }}: {{ hash }}
+  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  sha256: 9b1b30284a573fd416759437273dcc5c81022bdf2facb24b4aa029a62afd53b0
 
 build:
-  # skip s390x due to  missing parsedatetime and agate version >=1.5.0
-  skip: true  # [py<36 or s390x]
-  noarch: python
   number: 0
-  script: python setup.py install --single-version-externally-managed --record=record.txt
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
 
 requirements:
   host:
-    - python
-    - setuptools
     - pip
+    - python
     - wheel
-
+    - setuptools
   run:
-    - python >=3.6
+    - python
     - agate >=1.5.0
-    - sqlalchemy >=1.0.8
+    - sqlalchemy >=1.4
+
+# E   Module not found "sqlalchemy-cratedb"
+{% set deselect_tests = " --deselect=tests/test_agatesql.py::TestSQL::test_to_sql_create_statement_with_dialects" %}
 
 test:
-  requires:
-    - pip
-    - python <3.10
-    - pyicu
-    - future
-    - parsedatetime
-  commands:
-    - pip check
+  source_files:
+    - tests
   imports:
     - agatesql
+  commands:
+    - pip check
+    - pytest -v tests {{ deselect_tests }}
+  requires:
+    - pip
+    - pytest
 
 about:
-  home: http://agate-sql.readthedocs.org/
+  home: https://agate-sql.readthedocs.org
   license: MIT
   license_family: MIT
   license_file: COPYING
   summary: 'agate-sql adds SQL read/write support to agate.'
-  doc_url: http://agate-sql.readthedocs.org/
+  description: |
+    agate-sql uses a monkey patching pattern to add SQL support to all agate.Table instances.
+  doc_url: https://agate-sql.readthedocs.org
   dev_url: https://github.com/wireservice/agate-sql
 
 extra:
